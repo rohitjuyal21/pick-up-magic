@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sacramento: "var(--font-sacramento)",
+        satisfy: "var(--font-satisfy)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
