@@ -26,7 +26,7 @@ const satisfy = Satisfy({
 });
 
 export const metadata: Metadata = {
-  title: "Pickup Line Generator",
+  title: "Pick Up Magic",
   description: "Generate pickup lines for your crush",
 };
 

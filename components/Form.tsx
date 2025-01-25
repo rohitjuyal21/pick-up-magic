@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HeartStraight } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import LoadingHeart from "./LoadingHeart";
 
 const placeholderText = "She is the most...\nHe makes me feel...";
 
@@ -18,7 +19,7 @@ export default function Form({ setPickupLine }: FormProps) {
   const handleScroll = () => {
     const target = document.querySelector("#pickup-line-card");
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
@@ -33,14 +34,12 @@ export default function Form({ setPickupLine }: FormProps) {
         model: "gemini-1.5-flash",
       });
 
-      const prompt = `Generate one pickup line for my crush. She is the most ${about} and makes me feel ${keywords || "happy"}.`;
+      const prompt = `Generate one friendly and respectful pickup line for my crush. She is ${about}. Keep ${keywords || "happy"} in mind.`;
 
       const result = await model.generateContent(prompt);
 
       setPickupLine(result.response.text());
       handleScroll();
-
-      console.log(result.response.text());
     } catch (error) {
       console.error(error);
       toast.error("Failed to generate pickup line");
@@ -50,12 +49,12 @@ export default function Form({ setPickupLine }: FormProps) {
   };
 
   return (
-    <div className="w-full max-w-xl rounded-xl bg-white/30 p-8 shadow-2xl shadow-rose-500/10 backdrop-blur-md">
-      <form onSubmit={handleSubmit} className="space-y-10">
-        <div className="flex flex-col gap-2">
+    <div className="shadow-rose-500/4 w-full max-w-xl rounded-xl bg-white/30 p-6 shadow-[0_0_20px_4px] shadow-rose-500/10 backdrop-blur-md md:p-8">
+      <form onSubmit={handleSubmit} className="space-y-6 md:space-y-10">
+        <div className="flex flex-col gap-1 md:gap-2">
           <label
             htmlFor="tell-me"
-            className="block font-satisfy text-2xl font-semibold text-rose-500"
+            className="block font-satisfy text-xl font-semibold text-rose-500 md:text-2xl"
           >
             Tell me about your crush
           </label>
@@ -67,28 +66,36 @@ export default function Form({ setPickupLine }: FormProps) {
             placeholder={placeholderText}
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            className="resize-none whitespace-pre-wrap rounded-lg border bg-white/50 px-4 py-2 text-lg outline-none focus:ring-2 focus:ring-rose-500"
+            className="resize-none whitespace-pre-wrap rounded-lg border bg-white/50 px-3 py-2 outline-none focus:ring-2 focus:ring-rose-500 md:px-4 md:text-lg"
           ></textarea>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1 md:gap-2">
           <label
             htmlFor="Keywords"
-            className="block font-satisfy text-2xl font-semibold text-rose-500"
+            className="block font-satisfy text-xl font-semibold text-rose-500 md:text-2xl"
           >
             Keywords
           </label>
           <input
             name="Keywords"
             id="Keywords"
+            required
             placeholder="Romantic, Funny, Cute, etc."
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
-            className="rounded-lg border bg-white/50 px-4 py-2 text-lg outline-none focus:ring-2 focus:ring-rose-500"
+            className="rounded-lg border bg-white/50 px-3 py-2 outline-none focus:ring-2 focus:ring-rose-500 md:px-4 md:text-lg"
           ></input>
         </div>
         <div className="flex justify-center">
-          <button className="group relative z-10 flex w-52 items-center justify-center gap-2 overflow-hidden rounded-full border border-rose-500 bg-rose-500 px-10 py-3 font-satisfy text-2xl font-bold text-white transition duration-500 hover:text-rose-500 hover:shadow-lg hover:shadow-rose-500/30 active:scale-95">
-            Generate <HeartStraight className="inline-block size-6" />
+          <button className="group relative z-10 flex w-44 items-center justify-center gap-2 overflow-hidden rounded-full border border-rose-500 bg-rose-500 px-10 py-2 font-satisfy text-xl font-bold text-white transition duration-500 hover:text-rose-500 hover:shadow-lg hover:shadow-rose-500/30 active:scale-95 md:w-52 md:py-3 md:text-2xl">
+            {isLoading ? (
+              <LoadingHeart className="h-7 w-7 md:h-8 md:w-8" />
+            ) : (
+              <>
+                Generate <HeartStraight className="-mt-1 size-6" />
+              </>
+            )}
+
             <span className="absolute left-0 -z-10 h-full w-[25%] translate-y-full scale-90 rounded-full bg-white transition-all duration-500 group-hover:translate-y-0 group-hover:scale-150"></span>
             <span className="absolute left-[25%] -z-10 h-full w-[25%] translate-y-full scale-90 rounded-full bg-white transition-all delay-[75ms] duration-500 group-hover:translate-y-0 group-hover:scale-150"></span>
             <span className="absolute left-[50%] -z-10 h-full w-[25%] translate-y-full scale-90 rounded-full bg-white transition-all delay-100 duration-500 group-hover:translate-y-0 group-hover:scale-150"></span>
