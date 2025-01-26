@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Sacramento, Satisfy } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,6 +69,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${sacramento.variable} ${satisfy.variable} antialiased`}
       >
         {children}
+        <Analytics />
         <Toaster />
       </body>
     </html>

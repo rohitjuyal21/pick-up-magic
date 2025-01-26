@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const { about, keywords } = await req.json();
 
   try {
-    const prompt = `Generate one pickup line for my crush. She is ${about}. Keep ${keywords || "happy"} in mind.`;
+    const prompt = `Generate a pickup line for my crush, who is ${about}. Tone: ${keywords || "romantic"}.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",

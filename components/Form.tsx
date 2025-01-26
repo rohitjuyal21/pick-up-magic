@@ -74,13 +74,13 @@ export default function Form({ setPickupLine }: FormProps) {
             htmlFor="Keywords"
             className="block font-satisfy text-xl font-semibold text-rose-500 md:text-2xl"
           >
-            Keywords
+            Tone
           </label>
           <input
             name="Keywords"
             id="Keywords"
             required
-            placeholder="Romantic, Funny, Cute, etc."
+            placeholder="Funny"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
             className="rounded-lg border bg-white/50 px-3 py-2 outline-none focus:ring-2 focus:ring-rose-500 md:px-4 md:text-lg"
