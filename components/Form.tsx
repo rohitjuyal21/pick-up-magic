@@ -1,5 +1,4 @@
 "use client";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HeartStraight } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -25,21 +24,23 @@ export default function Form({ setPickupLine }: FormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isLoading) return;
     setIsLoading(true);
+
     try {
-      const genAI = new GoogleGenerativeAI(
-        process.env.NEXT_PUBLIC_GEMINI_API_KEY!,
-      );
-      const model = await genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+      const response = await fetch("api/generatePickupLine", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ about, keywords }),
       });
 
-      const prompt = `Generate one friendly and respectful pickup line for my crush. She is ${about}. Keep ${keywords || "happy"} in mind.`;
-
-      const result = await model.generateContent(prompt);
-
-      setPickupLine(result.response.text());
-      handleScroll();
+      const { pickupLine: result } = await response.json();
+      if (response.ok) {
+        setPickupLine(result);
+        handleScroll();
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to generate pickup line");
@@ -47,7 +48,6 @@ export default function Form({ setPickupLine }: FormProps) {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="shadow-rose-500/4 w-full max-w-xl rounded-xl bg-white/30 p-6 shadow-[0_0_20px_4px] shadow-rose-500/10 backdrop-blur-md md:p-8">
       <form onSubmit={handleSubmit} className="space-y-6 md:space-y-10">
