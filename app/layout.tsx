@@ -28,6 +28,33 @@ const satisfy = Satisfy({
 export const metadata: Metadata = {
   title: "Pick Up Magic",
   description: "Generate pickup lines for your crush",
+  openGraph: {
+    title: "Pick Up Magic",
+    description: "Generate pickup lines for your crush",
+    url: "https://pickupmagic.vercel.app",
+    siteName: "Pick Up Magic",
+    images: [
+      {
+        url: "https://pickupmagic.vercel.app/pickup-magic.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pick Up Magic",
+    description: "Generate pickup lines for your crush",
+    images: [
+      {
+        url: "https://pickupmagic.vercel.app/pickup-magic.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
