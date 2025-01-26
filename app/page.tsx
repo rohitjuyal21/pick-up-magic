@@ -2,6 +2,7 @@
 import Form from "@/components/Form";
 import Header from "@/components/Header";
 import PickupLineCard from "@/components/PickupLineCard";
+import { motion } from "motion/react";
 
 import { useState } from "react";
 
@@ -12,11 +13,18 @@ export default function Home() {
     <div className="relative min-h-screen">
       <div className="flex w-full flex-col items-center justify-center bg-gradient-to-br from-pink-500/20 via-pink-500/10 to-pink-500/5 p-6 md:p-8">
         <Header />
-        <h1 className="mb-12 text-center font-satisfy text-4xl font-bold text-rose-500 md:mb-24 md:text-5xl">
-          Pickup Line Generator
-        </h1>
-        <Form setPickupLine={setPickupLine} />
-        <PickupLineCard pickupLine={pickupLine} />
+        <motion.div
+          initial={{ y: 40, opacity: 0, filter: "blur(10px)" }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.5 }}
+          className="flex w-full flex-col items-center"
+        >
+          <h1 className="mb-12 text-center font-satisfy text-4xl font-bold text-rose-500 md:mb-24 md:text-5xl">
+            Pickup Line Generator
+          </h1>
+          <Form setPickupLine={setPickupLine} />
+          <PickupLineCard pickupLine={pickupLine} />
+        </motion.div>
       </div>
       <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-rose-500 opacity-20 shadow-[0_0_80px_80px_#f43f5e]"></div>
